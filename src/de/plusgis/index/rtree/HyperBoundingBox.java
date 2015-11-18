@@ -92,7 +92,41 @@ public class HyperBoundingBox {
 		this.pMin = pMin;
 		this.pMax = pMax;
 	}
-	
+	//--------------------------------------------------------------------------------------------------------
+	//added by shawrup
+	/**
+	 * Creates a HyperBoundingBox for given HyperPoints even if the points are not from the proper diagonal
+	 * @param pMin - min point
+	 * @param pMax - max point
+	 * @param isproper - is the min and max points are the endpoints of the proper diagonal ?
+	 */
+
+	public HyperBoundingBox(HyperPoint pMin, HyperPoint pMax,boolean isproper) {
+		if(pMin.getDimension() != pMax.getDimension())
+			throw new IllegalArgumentException("HyperPoints need same dimension");
+		if(isproper) {
+			this.pMin = pMin;
+			this.pMax = pMax;
+		}else {
+			int n = pMax.getDimension();
+			double[] newMax = new double[n];
+			double [] newMin = new double[n];
+			for(int i=0;i<n;i++){
+				double a = pMax.getCoord(i);
+				double b = pMin.getCoord(i);
+				if(a > b) {
+					newMax[i] = a;
+					newMin[i] = b;
+				}else{
+					newMax[i] = b;
+					newMin[i] = a;
+				}
+			}
+			this.pMax = new HyperPoint(newMax);
+			this.pMin = new HyperPoint(newMin);
+		}
+	}
+	//---------------------------------------------------------------------------------------------------------
 	/**
 	 * Creates a null HyperBoundingBox with null HyperPoints.
 	 * Mostly used internal.
