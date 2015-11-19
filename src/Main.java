@@ -23,7 +23,8 @@ public class Main {
         //skylineExecute(1,1);
         //generateTreeFile();
         //readAll();
-        skylineExecute(1,-1);
+        //skylineExecute(1,-1);
+        skyline();
     }
 
     public void generateTreeFile(){
