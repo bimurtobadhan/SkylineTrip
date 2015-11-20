@@ -953,9 +953,14 @@ public class RTree {
 	 * @return HyperboboundingBox - the nearest POI
 	 */
 	public HyperBoundingBox nearestNeighbour2(HyperPoint point) throws RTreeException {
+		int dim = point.getDimension();
+		double x[] = new double[dim];
+		double a = Math.sqrt(Double.POSITIVE_INFINITY);
+		for(int i=0;i<dim;i++){
+			x[i] = a;
+		}
 		try {
-			double a = Math.sqrt(Double.POSITIVE_INFINITY);
-			HyperPoint pMin = new HyperPoint(new double[]{a,a});
+			HyperPoint pMin = new HyperPoint(x);
 			HyperBoundingBox box = new HyperBoundingBox(pMin, pMin);
 			return nearestNeighbour2(file.readNode(0), point, box);
 		} catch(PageFileException e) {
